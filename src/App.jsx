@@ -5,26 +5,24 @@ import axios from "axios"
 
 const App = () =>{
 
-  const [expenses, setExpenses] = useState([
-
-    {id: 1, title: "Food", amount:500},
-    {id: 2, title: "Movie", amount:-200},
-    {id: 3, title: "Shopping", amount:-500},
-    {id: 4, title: "Travel", amount:2000}
-  ])
+  const [expenses, setExpenses] = useState([])
 
   useEffect(() =>{
     axios.get('https://expensetraker-zzp4.onrender.com/get-entries')
     .then(res => {
-      console.log(res.data)
+      console.log(res)
       setExpenses(res.data)
+      
     })
     .catch(err => console.log(err))
   },[])
 
+
+
   const addExpenses = (title, amount) =>{
     const nextId = expenses[expenses.length - 1].id +1
     setExpenses([...expenses, {id:nextId,title: title,  amount: amount}])
+    axios.post('https://expensetraker-zzp4.onrender.com/get-entries', ({id:nextId, title: title, amount: amount}))
   }
   const deleteExpense = (id) => {
     console.log(id)
