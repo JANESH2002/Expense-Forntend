@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect , useState } from "react"
 import ExpenseForm from "./components/ExpenseForm"
 import ExpenseItem from "./components/ExpenseItem"
 import axios from "axios"
@@ -14,13 +14,13 @@ const App = () =>{
   ])
 
   useEffect(() =>{
-    axios.get('')
+    axios.get('https://expensetraker-zzp4.onrender.com/get-entries')
     .then(res => {
       console.log(res.data)
       setExpenses(res.data)
     })
     .catch(err => console.log(err))
-  } )
+  },[])
 
   const addExpenses = (title, amount) =>{
     const nextId = expenses[expenses.length - 1].id +1
@@ -32,7 +32,8 @@ const App = () =>{
   }
    let income =0
    let expense =0
-   expenses.forEach((exp)=>{
+   console.log(expenses)
+   expenses.forEach((exp) => {
     if(exp.amount >0){
       income += exp.amount
     }
